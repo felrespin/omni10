@@ -53,6 +53,10 @@ function Main({ navigation }) {
     });
     console.log(response.data);
     setDevs(response.data.devs);
+    setCurrentRegion({latitude: response.data.devs[0].location.coordinates[1],
+                      longitude: response.data.devs[0].location.coordinates[0],
+                      latitudeDelta: 0.01,
+                      longitudeDelta: 0.01});
   }
   function handleRegionChanged(region) {
     console.log(region);
@@ -67,12 +71,12 @@ function Main({ navigation }) {
     <>
       <Mapview
         onRegionChangeComplete={handleRegionChanged}
-        initialRegion={currentRegion}
+        region={currentRegion}
         style={styles.map}
       >
         {devs.map(dev => (
           <Marker
-            key={dev.id}
+            key={dev._id}
             coordinate={{
               latitude: dev.location.coordinates[1],
               longitude: dev.location.coordinates[0]
